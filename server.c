@@ -18,7 +18,7 @@
 
 int main(int argc, char **argv){
     
-    printf("ciao server\n");
+   
 
     int new_socket, server_fd;
     if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0) {
