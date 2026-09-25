@@ -17,9 +17,7 @@
 #define buffersize 1024
 
 int main(int argc, char **argv){
-    
-   
-
+    int connessione = 0;
     int new_socket, server_fd;
     if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0) {
         perror("Errore nella creazione del socket");
@@ -37,15 +35,24 @@ int main(int argc, char **argv){
         perror("Errore nel bind");
         exit(EXIT_FAILURE);
     }
-    while(1){
-        if (listen(server_fd, 3) < 0) {
+     if (listen(server_fd, 3) < 0) {
             perror("Errore nella listen");
             exit(EXIT_FAILURE);
         }
+    while(1){
 
-        if ( (new_socket = accept(server_fd, (struct sockaddr *)&servAddr, (socklen_t*)&servAddr)) < 0) {
+        struct sockaddr_in clientAddr;
+        socklen_t addrlen = sizeof(clientAddr);
+
+        if ( (new_socket = accept(server_fd, (struct sockaddr *)&clientAddr, &addrlen)) < 0) {
             perror("Errore nell'accept");
             exit(EXIT_FAILURE);
+        }
+        else{
+            connessione++;
+            printf("Numero di connessioni: %d\n", connessione);
+            
+
         }
         
         char messaggio[buffersize];
